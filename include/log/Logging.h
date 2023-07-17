@@ -49,7 +49,7 @@ public:
 
     void writeLog(const char *format, ...) ;
 
-    //static LogLevel g_logLevel ; 
+    static LogLevel g_logLevel ; 
     static LogLevel logLevel() ;
     static void setLogLevel(LogLevel level);
 

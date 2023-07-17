@@ -15,12 +15,12 @@ const char* getErrnoMsg(int savedErrno)
 
 const char* LogLevelName[Logger::NUM_LOG_LEVELS] =
 {
-  "TRACE ",
-  "DEBUG ",
-  "INFO  ",
-  "WARN  ",
-  "ERROR ",
-  "FATAL ",
+  "TRACE: ",
+  "DEBUG: ",
+  "INFO: ",
+  "WARN: ",
+  "ERROR: ",
+  "FATAL: ",
 };
 
 static void defaultOutput(const char* data, int len)
@@ -35,7 +35,7 @@ static void defaultFlush()
 
 Logger::OutputFunc g_output = defaultOutput;
 Logger::FlushFunc g_flush = defaultFlush;
-Logger::LogLevel g_logLevel = Logger::INFO ; 
+Logger::LogLevel Logger::g_logLevel = Logger::INFO ; 
 
 void Logger::setLogLevel(Logger::LogLevel level)
 {
@@ -88,9 +88,9 @@ void Logger::formatTime()
 
 void Logger::finish()
 {
-    buffer_.append(" - ") ; 
+    buffer_.append(" --") ; 
     buffer_.append(basename_.data_, basename_.size_) ; 
-    buffer_.append(" : " + std::to_string(line_) + "\n") ;  
+    buffer_.append(":" + std::to_string(line_) + "\n") ;  
 }
 
 // level默认为INFO等级
@@ -105,7 +105,7 @@ Logger::Logger(const char* file, int line , Logger::LogLevel level)
     formatTime();
 
     // 写入线程 id 
-    buffer_.append("tid :" + std::to_string(CurrentThread::tid()) + " ");
+    buffer_.append("thread id-" + std::to_string(CurrentThread::tid()) + " ");
      
     // 写入日志等级 
     buffer_.append(LogLevelName[level] , ::strlen(LogLevelName[level])) ;

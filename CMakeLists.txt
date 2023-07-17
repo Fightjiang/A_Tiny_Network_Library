@@ -42,6 +42,9 @@ add_library(Tiny_WebServer
             # ${SRC_MYSQL}
             )
 
+# 目标动态库所需连接的库（这里需要连接libpthread.so）
+target_link_libraries(Tiny_WebServer pthread)
+
 # src 包含了 Tiny_WebServer 所有的相关代码
 add_subdirectory(src)
 

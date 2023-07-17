@@ -1,0 +1,13 @@
+2023/07/17 23:41:22 thread id-7327 INFO: info --logTest.cc:9
+2023/07/17 23:41:22 thread id-7327 WARN: warn --logTest.cc:10
+2023/07/17 23:41:22 thread id-7327 ERROR: error --logTest.cc:11
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 0  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 1  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 2  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 3  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 4  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 5  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 6  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 7  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 8  abc...xyz --logTest.cc:15
+2023/07/17 23:41:22 thread id-7327 INFO: Hello , test_Logging , 9  abc...xyz --logTest.cc:15
