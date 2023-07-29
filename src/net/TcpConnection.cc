@@ -53,7 +53,7 @@ TcpConnection::TcpConnection(EventLoop *loop,
 
 TcpConnection::~TcpConnection()
 {
-    LOG_INFO("TcpConnection::create[ %s ] at fd = %d " , name_.c_str() , channel_->fd()) ; 
+    LOG_INFO("TcpConnection::delete[ %s ] at fd = %d " , name_.c_str() , channel_->fd()) ; 
 }
 
 // 发送数据
@@ -269,10 +269,15 @@ void TcpConnection::handleClose()
     setState(kDisconnected);    // 设置状态为关闭连接状态
     channel_->disableAll();     // 注销Channel所有感兴趣事件
 
-    // 关闭连接 , 为什么还要继续增加一个引用计数的智能指针呢？ 
+    // 继续增加一个引用计数的智能指针，防止 TcpConnectionPtr 计数减到零析构，无法执行下面的回调函数 
     TcpConnectionPtr connPtr(shared_from_this());
-    connectionCallback_(connPtr);   
-    closeCallback_(connPtr);        
+    connectionCallback_(connPtr); // 用户设置的断开连接的回调函数
+    // TcpServe 设置的关闭链接时的回调函数 
+    // 因为还要在总的 TcpServer 中函数对应的 ConnectionMap 指向的 TcpConnection 对象
+    // 然后再调用 TcpConnection 中的 connectDestroyed 函数删除 Epoller 监听的 Channel 事件
+    closeCallback_(connPtr);      
+    // 最后 TcpConnection 析构，因为成员变量都是智能指针的形式，故都会执行对应的析构
+
 }
 
 void TcpConnection::handleError()

@@ -45,8 +45,10 @@ public:
     void setConnectionCallback(const ConnectionCallback &cb) { connectionCallback_ = cb ; }
     void setMessageCallback(const MessageCallback &cb) { messageCallback_ = cb ; }
     void setWriteCompleteCallback(const WriteCompleteCallback &cb) { writeCompleteCallback_ = cb ; }
-    void setCloseCallback(const CloseCallback &cb) { closeCallback_ = cb ; }
+    // TODO 
     void setHighWaterMarkCallback(const HighWaterMarkCallback &cb, size_t highWaterMark) { highWaterMarkCallback_ = cb ; highWaterMark_ = highWaterMark ; }
+    // 这个回调函数时 Server 类中设置的
+    void setCloseCallback(const CloseCallback &cb) { closeCallback_ = cb ; }
 
     // TcpServer会调用
     void connectEstablished(); // 连接建立

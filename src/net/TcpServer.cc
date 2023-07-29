@@ -96,10 +96,11 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
                                             peerAddr)) ;
     connections_[connName] = conn;
 
-    // 下面的回调都是用户设置给TcpServer => TcpConnection => Channel 
+    // 下面三个回调函数都是用户设置给TcpServer => TcpConnection => Channel 
     conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messageCallback_);
     conn->setWriteCompleteCallback(writeCompleteCallback_);
+    // 设置 TcpConnection 对应的断开连接回调函数
     conn->setCloseCallback(
         std::bind(&TcpServer::removeConnection, this, std::placeholders::_1));
 
@@ -115,7 +116,7 @@ void TcpServer::removeConnection(const TcpConnectionPtr& conn)
 void TcpServer::removeConnectionInLoop(const TcpConnectionPtr& conn)
 {
     LOG_INFO("TcpServer::removeConnectionInLoop [ %s ] - connection %s "
-                , name_ , conn->name());
+                , name_.data() , conn->name().data());
     connections_.erase(conn->name());
     EventLoop *ioLoop = conn->getLoop();
     ioLoop->queueInLoop(
