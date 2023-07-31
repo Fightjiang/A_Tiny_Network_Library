@@ -38,7 +38,7 @@ private:
     MYSQL* conn_ = nullptr;
     MYSQL_RES* result_ = nullptr;
     MYSQL_ROW row_ = nullptr;
-    // 绝对始终
+    // 绝对时钟
     std::chrono::steady_clock::time_point m_alivetime;
 };
 

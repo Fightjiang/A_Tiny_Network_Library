@@ -1,6 +1,6 @@
 #include "./mysql/ConnectionPool.h"
 #include "./log/Logging.h"
-#include <thread>
+
 
 ConnectionPool& ConnectionPool::getConnectionPool()
 {
@@ -118,7 +118,7 @@ std::shared_ptr<MysqlConn> ConnectionPool::getConnection()
             // std::cv_status::timeout 表示超时
             if (connectionQueue_.empty())
             {
-                LOG_DEBUG("get connection timeout ...");
+                LOG_INFO("get connection timeout ...");
                 return nullptr;
             }
         }
