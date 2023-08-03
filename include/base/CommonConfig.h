@@ -21,8 +21,8 @@ struct ConfigInfo{
     const char * mysql_user = "root" ;                               // 数据库账号
     const char * mysql_pwd = "root123" ;                             // 数据库密码
     const char * mysql_dbName = "chatroom" ;                         // 使用的 database
-    int mysql_maxConnCount = 8   ; 
-    int mysql_minConnCount = 4   ;
+    int mysql_maxConnCount = 16   ; 
+    int mysql_minConnCount = 8   ;
     int mysql_timeOut = 2 * 1000 ;           // 想获得阻塞的连接，阻塞 2s 则返回空不再等待
     int mysql_maxIdleTime = 5 * 1000 ; // 空闲连接空闲了 5s
     // const char *server_IP = "127.0.0.1" ;                         // 服务器 Ip  

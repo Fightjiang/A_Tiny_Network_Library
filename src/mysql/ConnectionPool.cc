@@ -65,7 +65,11 @@ void ConnectionPool::produceConnection()
             addConnection();  
             // 唤醒被阻塞的线程
             cond_.notify_all();
-        }       
+        } 
+        else // 到达连接最大数量了，等待 1 秒再进行资源判断
+        {
+            std::this_thread::sleep_for(std::chrono::microseconds(1000));
+        }      
     }
 }
 
