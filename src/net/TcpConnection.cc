@@ -63,14 +63,17 @@ void TcpConnection::send(const std::string &buf)
     {
         if (loop_->isInLoopThread())
         {
-            sendInLoop(buf) ;
+            sendInLoop(buf.c_str(), buf.size());
         }
         else
         {
+            // 遇到重载函数的绑定，可以使用函数指针来指定确切的函数
+            void(TcpConnection::*fp)(const void* data, size_t len) = &TcpConnection::sendInLoop;
             loop_->runInLoop(std::bind(
-                &TcpConnection::sendInLoop ,
+                fp,
                 this,
-                buf)) ;
+                buf.c_str(),
+                buf.size()));
         }
     }
 }
@@ -81,23 +84,28 @@ void TcpConnection::send(Buffer *buf)
     {
         if (loop_->isInLoopThread())
         {
-            sendInLoop(buf->retrieveAllAsString()); 
+            sendInLoop(buf->peek(), buf->readableBytes());
+            buf->retrieveAll();
         }
         else
         {
-            loop_->runInLoop(std::bind(&TcpConnection::sendInLoop, this , buf->retrieveAllAsString())) ;
+            // sendInLoop有多重重载，需要使用函数指针确定
+            void (TcpConnection::*fp)(const std::string& message) = &TcpConnection::sendInLoop;
+            loop_->runInLoop(std::bind(fp, this, buf->retrieveAllAsString()));
         }
     }
 }
 
-
-// 发送数据 应用写的快 而内核发送数据慢 需要把待发送数据写入缓冲区，故设置了水位回调
 void TcpConnection::sendInLoop(const std::string& message)
 {
-    const char *data = message.data() ; 
-    size_t len = message.size() ; 
+    sendInLoop(message.data(), message.size());
+}
+
+// 发送数据 应用写的快 而内核发送数据慢 需要把待发送数据写入缓冲区，故设置了水位回调
+void TcpConnection::sendInLoop(const void* data, size_t len)
+{
     ssize_t nwrote = 0;
-    size_t remaining = len;
+    size_t remaining = len; 
     bool faultError = false; // 是否对端已经关闭了
 
     // 之前调用过connection得shutdown，不能再进行发送了

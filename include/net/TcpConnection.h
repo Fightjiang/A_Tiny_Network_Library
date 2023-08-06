@@ -72,7 +72,7 @@ private :
     void handleClose();
     void handleError();
 
-    // void sendInLoop(const void* message, size_t len);
+    void sendInLoop(const void* message, size_t len);
     void sendInLoop(const std::string& message);
     void shutdownInLoop();
 

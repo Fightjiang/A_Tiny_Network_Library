@@ -1,6 +1,9 @@
 #ifndef COMMON_CONFIG_H
 #define COMMON_CONFIG_H
 
+#include <unordered_map>
+#include <unordered_set>
+#include <string>
  
 // #define SLEEP_MILLISECOND(ms)        \
 //     std::this_thread::sleep_for(std::chrono::milliseconds(ms)); 
@@ -38,5 +41,51 @@ struct ConfigInfo{
     int trigMode = 3 ;                                               // 采用的触发模式，0 水平触发；1 客户端 ET 服务端 LT ; 2  客户端 LT 服务端 ET; 3 客户端 ET 服务端 ET ; default = 3 ; 
 }; 
 
+struct HttpConfigInfo { 
+    
+    std::string srcDir = "/home/lec/File/New_WebServer/resources" ;  // 服务器文件所在的地址
+    std::string jwtSecret = "Chatroom" ;                             // JWT 中的密钥设置
+    int jwtExpire = 60*60   ;                                        // JWT 中的 token 过期时间 1 小时 , 单位是秒
+    
+    std::unordered_map<std::string, std::string> SUFFIX_TYPE = {
+        { ".html",  "text/html" },
+        { ".xml",   "text/xml" },
+        { ".xhtml", "application/xhtml+xml" },
+        { ".txt",   "text/plain" },
+        { ".rtf",   "application/rtf" },
+        { ".pdf",   "application/pdf" },
+        { ".word",  "application/nsword" },
+        { ".png",   "image/png" },
+        { ".gif",   "image/gif" },
+        { ".jpg",   "image/jpeg" },
+        { ".jpeg",  "image/jpeg" },
+        { ".au",    "audio/basic" },
+        { ".mpeg",  "video/mpeg" },
+        { ".mpg",   "video/mpeg" },
+        { ".avi",   "video/x-msvideo" },
+        { ".gz",    "application/x-gzip" },
+        { ".tar",   "application/x-tar" },
+        { ".css",   "text/css "},
+        { ".js",    "text/javascript "},
+    };
+    std::unordered_map<int, std::string> CODE_STATUS = {
+        { 200, "OK" },
+        { 400, "Bad Request" },
+        { 403, "Forbidden" },
+        { 404, "Not Found" },
+    }; 
+    std::unordered_map<int, std::string> CODE_PATH = {
+        { 400, "/400.html" },
+        { 403, "/403.html" },
+        { 404, "/404.html" },
+    };
+    std::unordered_set<std::string> DEFAULT_HTML{
+            "/index", "/register", "/login", "/welcome"
+             "/chat", "/video", "/picture", "/websocket"
+    } ;
+    std::unordered_map<std::string, int> DEFAULT_HTML_TAG {
+            {"/register.html", 0}, {"/login.html", 1},  
+    };
+} ; 
 
 #endif

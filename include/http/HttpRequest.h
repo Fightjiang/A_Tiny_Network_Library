@@ -1,5 +1,5 @@
-#ifndef HTTP_HTTPREQUEST_H
-#define HTTP_HTTPREQUEST_H
+#ifndef HTTP_REQUEST_H
+#define HTTP_REQUEST_H
 
 #include "../base/Timestamp.h"
 #include <unordered_map>
@@ -25,6 +25,20 @@ public:
 
     void setVersion(Version v)  { version_ = v; }
     Version version() const     { return version_; }
+    
+    const char* versionString() const
+    {
+        const char* result = "Unknown Http Version";
+        switch(version_)
+        {
+          case kHttp10: result = "HTTP/1.0"; break;
+          case kHttp11: result = "HTTP/1.1"; break; 
+          default:
+            break;
+        }
+        return result;
+    } 
+
     // 目前只支持 GET 和 POST 请求
     bool setMethod(const char *start, const char *end)
     {
