@@ -1,0 +1,3 @@
+add_executable(httpServerTest httpServerTest.cc)
+target_link_libraries(httpServerTest Tiny_WebServer)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/example)

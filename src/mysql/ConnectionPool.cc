@@ -39,7 +39,7 @@ ConnectionPool::~ConnectionPool()
 
 void ConnectionPool::loadConfigure() 
 {
-    ConfigInfo config_ ; 
+    ServerConfigInfo config_ ; 
     ip_     = config_.mysql_host    ;  
     user_   = config_.mysql_user  ;
     passwd_ = config_.mysql_pwd ;

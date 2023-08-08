@@ -2,6 +2,7 @@
 #define HTTP_REQUEST_H
 
 #include "../base/Timestamp.h"
+#include "../base/CommonConfig.h"
 #include <unordered_map>
 
 class Buffer;
@@ -73,7 +74,13 @@ public:
 
     void setPath(const char *start, const char *end) { path_.assign(start, end);}
 
-    const std::string& path() const { return path_; }
+    const std::string path() const 
+    {
+        if((httpConfig_.DEFAULT_HTML.count(path_) != 0)) {
+            return path_ + ".html" ; 
+        }
+        return path_; 
+    }
 
     void setQuery(const char *start, const char *end) { query_.assign(start, end); }
 
@@ -154,6 +161,39 @@ public:
     const HttpRequest& request() const { return *this; }
     HttpRequest& request() { return *this; }
     
+    // 新增的一些功能 
+    std::string getFileType() const{
+        /* 判断文件类型 */
+        std::string filePath = this->path() ; 
+        std::string::size_type idx = filePath.find_last_of('.');
+        if(idx == std::string::npos) {
+            return "text/plain";
+        }
+        std::string suffix = filePath.substr(idx);
+        if(httpConfig_.SUFFIX_TYPE.count(suffix) == 1) {
+            return httpConfig_.SUFFIX_TYPE.find(suffix)->second;
+        }
+        return "text/plain";
+    }
+
+    bool isUpgradeWebSocket() const {
+        if(headers_.find("Connection") != headers_.end() && 
+            headers_.find("Upgrade") != headers_.end() && 
+            headers_.find("Sec-WebSocket-Key") != headers_.end() ) {
+
+            return headers_.find("Connection")->second == "keep-Upgrade" || 
+                    headers_.find("Upgrade")->second == "websocket" ; 
+        
+        }
+        return false ; 
+    }
+
+    std::string getSrcDirPath() const {
+        return httpConfig_.srcDir ; 
+    }
+
+    
+
 private: 
     
     Method method_;                                         // 请求方法
@@ -164,6 +204,7 @@ private:
     Timestamp receiveTime_;                                 // 请求时间
     std::unordered_map<std::string, std::string> headers_;  // 请求头部列表
     std::unordered_map<std::string, std::string> postData_; // Post 请求数据
+    HttpConfigInfo httpConfig_ ;                           // 处理 Http 请求需要用到的文件参数
 };
 
 #endif

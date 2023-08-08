@@ -24,19 +24,15 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # 包含这些目录下的.cc文件
 aux_source_directory(${PROJECT_SOURCE_DIR}/src/base SRC_BASE)
 aux_source_directory(${PROJECT_SOURCE_DIR}/src/net SRC_NET) 
-aux_source_directory(${PROJECT_SOURCE_DIR}/src/http SRC_HTTP)
-# aux_source_directory(${PROJECT_SOURCE_DIR}/src/timer SRC_TIMER)
-aux_source_directory(${PROJECT_SOURCE_DIR}/src/log SRC_LOG)
-# aux_source_directory(${PROJECT_SOURCE_DIR}/src/memory SRC_MEMORY)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src/http SRC_HTTP) 
+aux_source_directory(${PROJECT_SOURCE_DIR}/src/log SRC_LOG) 
 aux_source_directory(${PROJECT_SOURCE_DIR}/src/mysql SRC_MYSQL)
 
 add_library(Tiny_WebServer  
             ${SRC_BASE}
-            ${SRC_NET} 
-            # ${SRC_TIMER}
+            ${SRC_NET}  
             ${SRC_LOG}
-            ${SRC_HTTP}
-            # ${SRC_MEMORY}
+            ${SRC_HTTP} 
             ${SRC_MYSQL}
             )
 
@@ -47,4 +43,4 @@ target_link_libraries(Tiny_WebServer pthread mysqlclient)
 add_subdirectory(src)
 
 # example 包含了 Tiny_WebServer 框架是由的示例代码
-# add_subdirectory(example)
+add_subdirectory(example)

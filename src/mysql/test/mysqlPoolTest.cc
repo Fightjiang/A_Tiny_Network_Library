@@ -6,7 +6,7 @@ using namespace std ;
 // 1. 单线程: 使用/不使用连接池
 // 2. 多线程: 使用/不使用连接池
 
-ConfigInfo config_ ; 
+ServerConfigInfo config_ ; 
 // 非连接池
 void op1(int begin, int end)
 {
