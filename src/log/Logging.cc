@@ -86,12 +86,6 @@ void Logger::formatTime()
     // buffer_.append(buf , 7) ; // 注意多了一个空格 
 }
 
-void Logger::finish()
-{
-    buffer_.append(" --") ; 
-    buffer_.append(basename_.data_, basename_.size_) ; 
-    buffer_.append(":" + std::to_string(line_) + "\n") ;  
-}
 
 // level默认为INFO等级
 Logger::Logger(const char* file, int line , Logger::LogLevel level)  
@@ -129,10 +123,16 @@ Logger::Logger(const char* file, int line, Logger::LogLevel level, const char* f
     buffer_.append(func) ;  
 }
 
+void Logger::finish()
+{
+    buffer_.append(" --") ; 
+    buffer_.append(basename_.data_, basename_.size_) ; 
+    buffer_.append(":" + std::to_string(line_) + "\n") ;  
+}
+
 Logger::~Logger()
 {
     finish(); 
-
     // 输出(默认向终端输出)
     g_output(buffer_.data(), buffer_.length());
 

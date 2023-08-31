@@ -20,7 +20,7 @@ public:
         NUM_LOG_LEVELS,
     };
 
-    // SourceFile的作用是提取文件名
+    // SourceFile的作用是提取报错日志所在的文件名
     class SourceFile 
     {
     public : 
