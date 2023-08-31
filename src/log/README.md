@@ -219,3 +219,5 @@ void LogFile::FileUtil::append(const char* data, size_t len)
 }
 ```
 
+参考链接：
+* [明明1109 muduo笔记 日志库](https://www.cnblogs.com/fortunely/p/15973948.html#small-buffer%E5%AD%98%E6%94%BElog%E6%B6%88%E6%81%AF)
